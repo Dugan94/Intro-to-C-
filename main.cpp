@@ -1,95 +1,97 @@
 #include <iostream>
+#include <iomanip>
+
 using namespace std;
 
+// Conversion rates
+const double BTC_CONVERSION = 0.00012;
+const double CAD_CONVERSION = 1.33;
+const double MXN_CONVERSION = 19.57;
+
+// Convert dollars to bitcoin, handling the
+// service fee.
+double dollarsToBTC(double dollars) {
+    double fee;
+    // Calculate the service fee
+    // BTC service fee:  5% of first $1000, 2.5% after
+    if (dollars <= 1000) {
+            // The service fee is only calculated as:
+            // 5% * 1000
+            fee = 0.05 * dollars;
+    } else {
+            // The service fee is calculated as:
+            fee = 0.025 * dollars;
+    }
+
+    dollars -= fee;
+    //Do the conversion
+    dollars = 0.00012 * dollars;
+    //Return the converted amount
+    return dollars;
+}
+
+double dollarsToCAD(double dollars) {
+    double fee;
+    // Calculate the service fee
+    // CAD service fee:  7% of first $1500, 5% after
+    if (dollars <= 1500) {
+            // The service fee is only calculated as:
+            // 7% * 1500
+            fee = 0.07 * dollars;
+    } else {
+            // The service fee is calculated as:
+            fee = 0.05 * dollars;
+    }
+
+    dollars -= fee;
+    //Do the conversion
+    dollars = 1.33 * dollars;
+    //Return the converted amount
+    return dollars;
+}
+
+double dollarsToMXN(double dollars) {
+    double fee;
+    // Calculate the service fee
+    // CAD service fee:  6% of first $1200, 3.5% after
+    if (dollars <= 1200) {
+            // The service fee is only calculated as:
+            // 6% * 1200
+            fee = 0.06 * dollars;
+    } else {
+            // The service fee is calculated as:
+            fee = 0.035 * dollars;
+    }
+
+    dollars -= fee;
+    //Do the conversion
+    dollars = 19.57 * dollars;
+    //Return the converted amount
+    return dollars;
+}
+
 int main()
-
 {
-  char corroded; //Silent when Key is turned, Y or N
-  char clicking; // Not silent when key is turned, Y or No
-  char cranking; // When car fails to start
-  char silent; // No sound
-  char noise; // sound
+    double amount;
 
-  cout << "Answer the following questions\n";
-  cout << "with either Y for Yes or ";
-  cout << "N or No.\n";
-  cout << "Is the car silent when you turn the key?\n";
-  cin >> silent;
-  cout << "Are the battery terminals corroded?\n";
-  cin >> corroded;
-  cout << "Does the car make a clicking noise?\n";
-  cin >> clicking;
-  cout << "Does the car crank up but fail to start?\n";
-  cin >> cranking;
+    cout << "Welcome to the Currency Exchange Service. " << endl;
+    cout << "I can exchange dollars for bitcoin,"
+         << " Canadian dollars, or Mexican pesos." << endl;
 
-  // Determine the battery terminals
-  if (corroded == 'Y')
-  {
-    cout << "Clean the terminals and try starting again.\n";
-  }
-else // Batteries corroded
-{
-  cout << "Replace the cables and try again.\n";
+    while (true) {
+        cout << "Please input the amount in USD to "
+             << "exchange (-1 to quit): ";
+        cin >> amount;
+        if (amount == -1)
+            break;
+
+        cout << fixed << setprecision(2) << endl;
+        cout << "$" << amount << " can be exchanged for: " << endl;
+        cout << "BTC: " << dollarsToBTC(amount) << endl;
+        cout << "CAD: " << dollarsToCAD(amount) << endl;
+        cout << "MXN: " << dollarsToMXN(amount) << endl; 
+    }
+
+    cout << "Exiting..." << endl;
+    return 0;
 }
-// Determine if the car makes a clicking sound
-if (clicking == 'Y')
-{
-  cout << "Replace the battery.\n";
-}
-else // Not clicking
-{
-  cout << " Does the car crank up but fail to start?\n";
-}
-if (cranking == 'Y')
-{
-  cout << "Check the spark plug connections.\n";
-}
-else // fail to start
-{
-  cout << "Take car in for service.\n";
-}
-return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
